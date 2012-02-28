@@ -11,10 +11,10 @@ Add the files to your Xcode project:
 	SHDataKit.h
 	NSManagedObjectContext+SHDataKitAdditions.h
 	NSManagedObjectContext+SHDataKitAdditions.m
-	SHDataAdapter.h
-	SHDataAdapter.m
 	SHManagedObject+SHDataKitAdditions.h
 	SHManagedObject+SHDataKitAdditions.m	
+	SHDataAdapter.h
+	SHDataAdapter.m
 
 ##Import the header where you need to access Core Data:##
 
