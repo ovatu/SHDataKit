@@ -49,5 +49,21 @@ Add the files to your Xcode project:
 
 	NSInteger postCount = [postAdapter count];
 	
+##Using SHKit in a background thread##
+
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+
+	NSManagedObjectContext *managedObjectContext = [NSManagedObjectContext managedObjectContextPreppedForMerge];
+	
+	SHDataAdapter *postAdapter = [Post dataAdapterWithManagedObjectContext:managedObjectContext];
+	
+	Post *post = [postAdapter insertWithValues:[NSDictionary dictionaryWithObjectsAndKeys:@"Post 1", @"post", nil]];
+	post.content = @"This is my first post";
+	
+	[managedObjectContext save:nil];
+	
+	[pool drain];
+
+	
 [1]: http://developer.apple.com/mac/library/DOCUMENTATION/Cocoa/Conceptual/CoreData/index.html "Core Data"
 [2]: http://shorthandapp.com/ "Shorthand"
