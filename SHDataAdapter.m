@@ -11,7 +11,12 @@
 
 @implementation SHDataAdapter
 
-- (id)initWithEntityName:(NSString *)entityName managedObjectContext:(NSManagedObjectContext*)managedObjectContext
++ (id)dataAdapterWithEntityName:(NSString*)entityName inManagedObjectContext:(NSManagedObjectContext*)managedObjectContext
+{
+    return [[[self class] alloc] initWithEntityName:entityName inManagedObjectContext:managedObjectContext];
+}
+
+- (id)initWithEntityName:(NSString *)entityName inManagedObjectContext:(NSManagedObjectContext*)managedObjectContext
 {
     self = [super init];
     if (self) {
@@ -45,6 +50,14 @@
 	return [NSEntityDescription entityForName:self.entityName inManagedObjectContext:self.managedObjectContext];   
 }
 
+- (NSFetchRequest*)fetchRequest
+{
+    NSFetchRequest *request = [[[NSFetchRequest alloc] init] autorelease]; 
+    [request setEntity:self.entityDescription];
+
+	return request;   
+}
+
 - (id)insert
 {
     // Insert the new object
@@ -66,8 +79,7 @@
 - (NSArray*)fetchAllWithPredicate:(NSPredicate*)predicate sortDescriptors:(NSArray*)sortDescriptors limit:(NSInteger)limit offset:(NSInteger)offset
 {	
     // Initialise the request, set the entity
-    NSFetchRequest *request = [[NSFetchRequest alloc] init]; 
-    [request setEntity:self.entityDescription];
+    NSFetchRequest *request = [self fetchRequest]; 
     
     // Set the predicate if not nil
     if (predicate != nil)
@@ -93,11 +105,8 @@
         [request setFetchOffset:offset];
     }
     
-    // Grab the results, release the request and return the results
-	NSArray *returns = [self.managedObjectContext executeFetchRequest:request error:nil];
-	[request release];
-    
-	return returns;
+    // Grab return the results
+	return [self fetchAllWithRequest:request];
 }
 
 - (NSArray*)fetchAllWithPredicate:(NSPredicate*)predicate sortDescriptors:(NSArray*)sortDescriptors limit:(NSInteger)limit
@@ -135,6 +144,11 @@
     return [self fetchAllWithPredicate:nil];
 }
 
+- (NSArray*)fetchAllWithRequest:(NSFetchRequest*)request;
+{
+	return [self.managedObjectContext executeFetchRequest:request error:nil];
+}
+
 - (id)fetchOneWithPredicate:(NSPredicate*)predicate sortDescriptors:(NSArray*)sortDescriptors
 {
     // Grab an array of entities limited to 1
@@ -164,8 +178,7 @@
 - (NSInteger)countWithPredicate:(NSPredicate*)predicate
 {
     // Initialise the request, set the entity.
-    NSFetchRequest *request = [[NSFetchRequest alloc] init]; 
-    [request setEntity:self.entityDescription];
+    NSFetchRequest *request = [self fetchRequest]; 
 
     // Set the predicate if not nil
     if (predicate != nil)
@@ -173,11 +186,8 @@
         [request setPredicate:predicate];
     }
 
-    // Grab the results, release the request and return the results
-	NSInteger count = [self.managedObjectContext countForFetchRequest:request error:nil];
-	[request release];
-
-	return count;
+    // Grab and return the results
+	return [self countWithRequest:request];
 }
 
 - (NSInteger)count
@@ -185,6 +195,12 @@
     // Count everything (nil predicate)
     return [self countWithPredicate:nil];
 }
+
+- (NSInteger)countWithRequest:(NSFetchRequest *)request
+{
+	return [self.managedObjectContext countForFetchRequest:request error:nil];
+}
+
 
 - (void)removeAllWithPredicate:(NSPredicate*)predicate
 {
@@ -206,5 +222,18 @@
     [self removeAllWithPredicate:nil];
 }
 
+- (void)removeAllWithRequest:(NSFetchRequest *)request
+{
+    // Grab all objects for the entity
+    NSArray *all = [self fetchAllWithRequest:request];
+    
+    // Iteratively remove them all
+    for (NSInteger i = 0; i<[all count]; i++)
+    {
+        NSManagedObject *object = [all objectAtIndex:i];
+        
+        [object deleteObject];
+    }
+}
 
 @end

@@ -56,11 +56,11 @@
         [managedObjectContext setUndoManager:nil];
         
         // Add an observer to the new managedObjectContext to merge its changes back to the primary MOC when it is saved.
-        NSNotificationCenter *nc = [NSNotificationCenter defaultCenter]; 
-        [nc addObserver:[self class]
-               selector:@selector(mergeChangesToManagedObjectContextOnMainThread:)
-                   name:NSManagedObjectContextDidSaveNotification
-                 object:managedObjectContext];
+        NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter]; 
+        [notificationCenter addObserver:[self class]
+                               selector:@selector(mergeChangesToManagedObjectContextOnMainThread:)
+                                   name:NSManagedObjectContextDidSaveNotification
+                                 object:managedObjectContext];
         
         return managedObjectContext;
     }

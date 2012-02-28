@@ -17,7 +17,10 @@
 @property (readonly, getter = managedObjectContext) NSManagedObjectContext *managedObjectContext;
 @property (readonly, getter = entityDescription) NSEntityDescription *entityDescription;
 
-- (id)initWithEntityName:(NSString*)entityName managedObjectContext:(NSManagedObjectContext*)managedObjectContext;
++ (id)dataAdapterWithEntityName:(NSString*)entityName inManagedObjectContext:(NSManagedObjectContext*)managedObjectContext;
+- (id)initWithEntityName:(NSString*)entityName inManagedObjectContext:(NSManagedObjectContext*)managedObjectContext;
+
+- (NSFetchRequest*)fetchRequest;
 
 - (id)insert;
 - (id)insertWithValues:(NSDictionary*)values;
@@ -31,6 +34,8 @@
 - (NSArray*)fetchAllWithPredicate:(NSPredicate*)predicate;
 - (NSArray*)fetchAll;
 
+- (NSArray*)fetchAllWithRequest:(NSFetchRequest*)request;
+
 - (id)fetchOneWithPredicate:(NSPredicate*)predicate sortDescriptors:(NSArray*)sortDescriptors;
 - (id)fetchOneWithPredicate:(NSPredicate*)predicate sortDescriptor:(NSSortDescriptor*)sortDescriptor;
 - (id)fetchOneWithPredicate:(NSPredicate*)predicate;
@@ -38,7 +43,11 @@
 - (NSInteger)countWithPredicate:(NSPredicate*)predicate;
 - (NSInteger)count;
 
+- (NSInteger)countWithRequest:(NSFetchRequest*)request;
+
 - (void)removeAllWithPredicate:(NSPredicate*)predicate;
 - (void)removeAll;
+
+- (void)removeAllWithRequest:(NSFetchRequest*)request;
 
 @end

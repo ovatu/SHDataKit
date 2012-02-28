@@ -36,7 +36,7 @@
 + (SHDataAdapter*)dataAdapterWithManagedObjectContext:(NSManagedObjectContext*)managedObjectContext
 {
     // Return a new (autoreleased) data adapter for the supplied managedObjectContext and using the classes entity name.
-    return [[[SHDataAdapter alloc] initWithEntityName:[[self class] entityName] managedObjectContext:managedObjectContext] autorelease];
+    return [SHDataAdapter dataAdapterWithEntityName:[[self class] entityName] inManagedObjectContext:managedObjectContext];
 }
 
 - (BOOL)saveObject:(NSError**)error
