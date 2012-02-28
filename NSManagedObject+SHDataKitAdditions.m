@@ -1,15 +1,15 @@
 //
-//  SHManagedObject.m
+//  SHManagedObject+SHDataKitAdditions.m
 //  SHDataKit
 //
 //  Created by David Hole on 23/02/12.
 //  Copyright (c) 2012 Shorthand. All rights reserved.
 //
 
-#import "SHManagedObject.h"
+#import "NSManagedObject+SHDataKitAdditions.h"
 #import "NSManagedObjectContext+SHDataKitAdditions.h"
 
-@implementation SHManagedObject
+@implementation NSManagedObject (SHDataKitAdditions)
 
 + (NSString*)entityName
 {

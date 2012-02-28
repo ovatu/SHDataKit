@@ -7,7 +7,7 @@
 //
 
 #import "NSManagedObjectContext+SHDataKitAdditions.h"
-#import "SHManagedObject.h"
+#import "NSManagedObject+SHDataKitAdditions.h"
 #import "SHDataAdapter.h"
 
 

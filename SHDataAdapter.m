@@ -7,8 +7,7 @@
 //
 
 #import "SHDataAdapter.h"
-
-#import "SHManagedObject.h"
+#import "NSManagedObject+SHDataKitAdditions.h"
 
 @implementation SHDataAdapter
 
@@ -55,7 +54,7 @@
 - (id)insertWithValues:(NSDictionary*)values
 {
     // Insert the new object
-    SHManagedObject *newObject = [self insert];
+    NSManagedObject *newObject = [self insert];
 
     // Set its values with the supplied dictionary
     [newObject setValuesForKeysWithDictionary:values];
@@ -195,7 +194,7 @@
     // Iteratively remove them all
     for (NSInteger i = 0; i<[all count]; i++)
     {
-        SHManagedObject *object = [all objectAtIndex:i];
+        NSManagedObject *object = [all objectAtIndex:i];
         
         [object deleteObject];
     }

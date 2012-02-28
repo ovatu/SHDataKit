@@ -1,5 +1,5 @@
 //
-//  SHManagedObject.h
+//  SHManagedObject+SHDataKitAdditions.h
 //  SHDataKit
 //
 //  Created by David Hole on 23/02/12.
@@ -10,7 +10,7 @@
 
 #import "SHDataAdapter.h"
 
-@interface SHManagedObject : NSManagedObject
+@interface NSManagedObject (SHDataKitAdditions)
 
 + (NSString*)entityName;
 
