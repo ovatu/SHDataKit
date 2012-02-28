@@ -8,23 +8,23 @@ for Mac OS X and iPhone OS. It was developed for the [Shorthand iOS app][2].
 
 Add the files to your Xcode project:
 
-SHDataKit.h
-NSManagedObjectContext+SHDataKitAdditions.h
-NSManagedObjectContext+SHDataKitAdditions.m
-SHDataAdapter.h
-SHDataAdapter.m
-SHManagedObject.h
-SHManagedObject.m	
+	SHDataKit.h
+	NSManagedObjectContext+SHDataKitAdditions.h
+	NSManagedObjectContext+SHDataKitAdditions.m
+	SHDataAdapter.h
+	SHDataAdapter.m
+	SHManagedObject.h
+	SHManagedObject.m	
 
-1. Import the header in any implementation file where you need to access Core Data:
+##Import the header where you need to access Core Data:##
 
 	#import "SHDataKit.h"
 
-2. Create a DataAdapter from the Post Model:
+##Create a DataAdapter from the Post Model:##
 
 	SHDataAdapter *postAdapter = [Post dataAdapter];
 
-3. Inert a new post object
+##Inert a new post object##
 
 	Post *post = [postAdapter insert];
 	post.subject = @"Post 1";
@@ -36,15 +36,18 @@ SHManagedObject.m
 		// Show error
 	}
 
-4. Fetch all Post Objects
+##Fetch all Post Objects##
 
 	NSArray *posts = [postAdapter fetchAll];
 
-5. Fetch select Post Objects and sort them
+##Fetch select Post Objects and sort them##
 
 	NSArray *posts = [postAdapter fetchAllWithPredicate:[NSPredicate predicateWithFormat:@"enabled = 1"]
-									sortDescriptor:[NSSortDescriptor sortDescriptorWithKey:@"order" ascending:YES]];
+								              sortDescriptor:[NSSortDescriptor sortDescriptorWithKey:@"order" ascending:YES]];
 
-6. Get the count for the Post entity
+##Get the count for the Post entity##
 
 	NSInteger postCount = [postAdapter count];
+	
+[1]: http://developer.apple.com/mac/library/DOCUMENTATION/Cocoa/Conceptual/CoreData/index.html "Core Data"
+[2]: http://shorthandapp.com/ "Shorthand"
